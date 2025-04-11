@@ -1,10 +1,13 @@
 ﻿using Labb_LinQ.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Threading.Channels;
 
 namespace Labb_LinQ.Data
 {
     public class LINQQueries
     {
+        // Hämta alla produkter i kategorin "Electronics" och sortera dem efter pris (högst först).
         public void ShowElectronicsProducts(ProductContext context)
         {
             var products = context.Products
@@ -19,6 +22,7 @@ namespace Labb_LinQ.Data
             }
         }
 
+        // Lista alla leverantörer som har produkter med ett lagersaldo under 10 enheter.
         public void ShowSupplierWithLowAmmount(ProductContext context)
         {
             var suppliers = context.Products
@@ -33,6 +37,7 @@ namespace Labb_LinQ.Data
             }
         }
 
+        // Beräkna det totala ordervärdet för alla ordrar gjorda under den senaste månaden.
         public void ShowTotalOrderValueLastMonth(ProductContext context)
         {
             var lastMounth = DateTime.Now.AddMonths(-1);
@@ -44,7 +49,7 @@ namespace Labb_LinQ.Data
             Console.WriteLine($"Totalt ordervärde senaste månaden: {total} kr");
         }
 
-        // Hitta de 3 mest sålda produkterna baserat på OrderDetail-data
+        // Hittar de 3 mest sålda produkterna baserat på OrderDetail-data.
         public void TopThreeProductSold(ProductContext context)
         {
             var topThree = context.OrderDetails
@@ -61,6 +66,45 @@ namespace Labb_LinQ.Data
             foreach (var product in topThree)
             {
                 Console.WriteLine($"Produkt: {product.Product.Name} Totalt antal sålda: {product.TotalProdSold}");
+            }
+        }
+
+        // Listar alla kategorier och antalet produkter i varje kategori.
+        public void ListAllProductInCategory(ProductContext context)
+        {
+            var listAllProducts = context.Categories
+                .Select(c => new
+                {
+                    c.Name,
+                    ProductCount = c.Products.Count
+                })
+                .ToList();
+            
+
+            foreach (var product in listAllProducts)
+            {
+                Console.WriteLine($"Kategori: {product.Name}\nAntal: {product.ProductCount} st.\n");
+            }
+        }
+
+        // Hämtar alla ordrar med tillhörande kunduppgifter och orderdetaljer där totalbeloppet överstiger 1000 kr.
+        public void OrdersWithInfo(ProductContext context)
+        {
+            var orders = context.Orders
+                .Where(o => o.TotalAmount > 1000)
+                .Include(o => o.Customer)
+                .Include(o => o.OrderDetails)
+                .ThenInclude(o => o.Product)
+                .ToList();
+
+            foreach (var order in orders)
+            {
+                Console.WriteLine($"\nNamn: {order.Customer.Name}\nOrderDatum: {order.OrderDate.ToShortDateString()}\n");
+                foreach (var item in order.OrderDetails)
+                {
+                    Console.Write($"Produkt:{item.Product.Name} | Kostnad: {order.TotalAmount}:-\n");
+                }
+                Console.WriteLine("..........................................");
             }
         }
     }

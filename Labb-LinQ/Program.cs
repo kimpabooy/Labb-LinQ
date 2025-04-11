@@ -11,12 +11,13 @@ namespace Labb_LinQ
             
             using(var context = new ProductContext())
             {
-                //querys.ShowElectronicsProducts(context);
-                //querys.ShowSupplierWithLowAmmount(context);
-                //querys.ShowTotalOrderValueLastMonth(context);
+                querys.ShowElectronicsProducts(context);
+                querys.ShowSupplierWithLowAmmount(context);
+                querys.ShowTotalOrderValueLastMonth(context);
                 querys.TopThreeProductSold(context);
+                querys.ListAllProductInCategory(context);
+                querys.OrdersWithInfo(context);
             }
-            
             Console.ReadKey();
         }
     }
