@@ -11,7 +11,8 @@ namespace Labb_LinQ
             
             using(var context = new ProductContext())
             {
-                querys.ShowElectronicsProducts(context);
+                //querys.ShowElectronicsProducts(context);
+                //querys.ShowSupplierWithLowAmmount(context);
             }
             
             Console.ReadKey();
