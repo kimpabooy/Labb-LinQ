@@ -43,5 +43,25 @@ namespace Labb_LinQ.Data
 
             Console.WriteLine($"Totalt ordervärde senaste månaden: {total} kr");
         }
+
+        // Hitta de 3 mest sålda produkterna baserat på OrderDetail-data
+        public void TopThreeProductSold(ProductContext context)
+        {
+            var topThree = context.OrderDetails
+                .GroupBy(od => od.Product)
+                .Select(p => new
+                {
+                    Product = p.Key,
+                    TotalProdSold = p.Sum(p => p.Quantity)
+                })
+                .OrderByDescending(p => p.TotalProdSold)
+                .Take(3)
+                .ToList();
+
+            foreach (var product in topThree)
+            {
+                Console.WriteLine($"Produkt: {product.Product.Name} Totalt antal sålda: {product.TotalProdSold}");
+            }
+        }
     }
 }

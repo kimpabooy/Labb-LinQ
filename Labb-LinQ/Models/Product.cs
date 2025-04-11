@@ -11,7 +11,7 @@ namespace Labb_LinQ.Models
         public decimal Price { get; set; }
         public int StockQuantity { get; set; }
 
-        // Nav
+        // Navigation
         public int CategoryId { get; set; }
         public Category Category { get; set; } = null!;
 

@@ -13,7 +13,8 @@ namespace Labb_LinQ
             {
                 //querys.ShowElectronicsProducts(context);
                 //querys.ShowSupplierWithLowAmmount(context);
-                querys.ShowTotalOrderValueLastMonth(context);
+                //querys.ShowTotalOrderValueLastMonth(context);
+                querys.TopThreeProductSold(context);
             }
             
             Console.ReadKey();

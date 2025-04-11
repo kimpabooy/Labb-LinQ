@@ -13,5 +13,4 @@ namespace Labb_LinQ.Models
 
         public ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
     }
-
 }
