@@ -32,5 +32,16 @@ namespace Labb_LinQ.Data
                 Console.WriteLine($"{supplier.Name}");
             }
         }
+
+        public void ShowTotalOrderValueLastMonth(ProductContext context)
+        {
+            var lastMounth = DateTime.Now.AddMonths(-1);
+
+            var total = context.Orders
+                .Where(o => o.OrderDate >= lastMounth)
+                .Sum(o => o.TotalAmount);
+
+            Console.WriteLine($"Totalt ordervärde senaste månaden: {total} kr");
+        }
     }
 }
