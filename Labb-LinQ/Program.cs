@@ -7,18 +7,8 @@ namespace Labb_LinQ
     {
         static void Main(string[] args)
         {
-            LINQQueries querys = new LINQQueries();
-            
-            using(var context = new ProductContext())
-            {
-                querys.ShowElectronicsProducts(context);
-                querys.ShowSupplierWithLowAmmount(context);
-                querys.ShowTotalOrderValueLastMonth(context);
-                querys.TopThreeProductSold(context);
-                querys.ListAllProductInCategory(context);
-                querys.OrdersWithInfo(context);
-            }
-            Console.ReadKey();
+            using var context = new ProductContext();
+            new Menu().ShowMenu(context);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Labb_LinQ.Data
                 .OrderByDescending(p => p.Price)
                 .ToList();
 
-            Console.WriteLine("Produkter i kategorin Electronics:");
+            Console.WriteLine("Produkter i kategorin Electronics: \n");
             foreach (var product in products)
             {
                 Console.WriteLine($"{product.Name} - {product.Price} kr");
@@ -28,9 +28,10 @@ namespace Labb_LinQ.Data
             var suppliers = context.Products
                 .Where(p => p.StockQuantity < 10)
                 .Select(p => p.Supplier)
+                .Distinct()
                 .ToList();
 
-            Console.WriteLine("Leverantörer med mindre än 10 producter i lager:");
+            Console.WriteLine("Leverantörer med mindre än 10 producter i lager: \n");
             foreach (var supplier in suppliers)
             {
                 Console.WriteLine($"{supplier.Name}");
@@ -52,20 +53,25 @@ namespace Labb_LinQ.Data
         // Hittar de 3 mest sålda produkterna baserat på OrderDetail-data.
         public void TopThreeProductSold(ProductContext context)
         {
+            int count = 1;
             var topThree = context.OrderDetails
                 .GroupBy(od => od.Product)
                 .Select(p => new
                 {
                     Product = p.Key,
-                    TotalProdSold = p.Sum(p => p.Quantity)
+                    TotalProdSold = p.Sum(p => p.Quantity),
+                    TotalPrice = p.Sum(p => p.Quantity * p.Product.Price)
                 })
                 .OrderByDescending(p => p.TotalProdSold)
                 .Take(3)
                 .ToList();
 
+            Console.WriteLine("\n<< TOP 3 SÅLDA PRODUKTERNA >>");
             foreach (var product in topThree)
             {
-                Console.WriteLine($"Produkt: {product.Product.Name} Totalt antal sålda: {product.TotalProdSold}");
+                Console.WriteLine($"\n#{count} Produkt: {product.Product.Name}\nTotalt Antal Sålda: {product.TotalProdSold}st\nTotalt Pris: {Math.Round(product.TotalPrice,2)} kr");
+                Console.WriteLine("......................................");
+                count++;
             }
         }
 
@@ -79,7 +85,7 @@ namespace Labb_LinQ.Data
                     ProductCount = c.Products.Count
                 })
                 .ToList();
-            
+
 
             foreach (var product in listAllProducts)
             {
@@ -107,5 +113,6 @@ namespace Labb_LinQ.Data
                 Console.WriteLine("..........................................");
             }
         }
+
     }
 }
