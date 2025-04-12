@@ -7,7 +7,7 @@ namespace Labb_LinQ
     {
         static void Main(string[] args)
         {
-            using var context = new ProductContext();
+            var context = new ProductContext();
             new Menu().ShowMenu(context);
         }
     }

@@ -1,5 +1,4 @@
 ﻿using Labb_LinQ.Data;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Labb_LinQ
 {
@@ -13,12 +12,12 @@ namespace Labb_LinQ
             {
                 Console.Clear();
 
-                Console.WriteLine("\nVälj ett alternativ:");
+                Console.WriteLine("\n << MENY >>\n");
                 Console.WriteLine("1. Visa alla produkter i kategorin Elektronik");
                 Console.WriteLine("2. Visa leverantörer med lågt lager");
                 Console.WriteLine("3. Visa totala ordervärdet för den senaste månaden");
                 Console.WriteLine("4. Visa de tre mest sålda produkterna");
-                Console.WriteLine("5. Lista alla produkter i en viss kategori");
+                Console.WriteLine("5. Lista alla produkter i varje kategori");
                 Console.WriteLine("6. Visa alla ordrar med information om kund och produkt");
                 Console.WriteLine("7. Avsluta programmet\n");
                 Console.Write("\nAnge ditt val (1-7): ");
